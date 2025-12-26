@@ -324,14 +324,17 @@ function previewEmote(emoteId) {
     const emoteHtml = `<img src="${emote.src}" alt="${emote.name}" class="emote-in-chat" style="height: ${app.currentSize}px; vertical-align: middle; margin: 0 2px;">`;
     
     // Получение значка, если выбран
-    const badgeHtml = app.selectedBadge ? badges[app.selectedBadge] + ' ' : '';
+    let usernameWithBadge = `<span class="username" style="color: #FFB347;">${username}:</span>`;
+    if (app.selectedBadge) {
+        usernameWithBadge = badges[app.selectedBadge] + usernameWithBadge;
+    }
     
     // Добавление в Twitch чат
     const twitchMsg = document.createElement('div');
     twitchMsg.className = 'chat-message';
     twitchMsg.innerHTML = `
-        ${badgeHtml}<span class="username" style="color: #FFB347;">${username}:</span>
-        <span class="message">${t.checking_emote} ${emoteHtml}</span>
+        ${usernameWithBadge}
+        <span class="message">${emoteHtml}</span>
     `;
     twitchChat.appendChild(twitchMsg);
     
@@ -340,7 +343,7 @@ function previewEmote(emoteId) {
     discordMsg.className = 'chat-message';
     discordMsg.innerHTML = `
         <span class="username" style="color: #F47FFF;">${username}</span>
-        <span class="message">${t.testing_emote} ${emoteHtml}</span>
+        <span class="message">${emoteHtml}</span>
     `;
     discordChat.appendChild(discordMsg);
     
