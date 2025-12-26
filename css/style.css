@@ -135,6 +135,7 @@ header p {
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    color: var(--text-primary);
     transition: all 0.3s;
 }
 
@@ -158,6 +159,7 @@ header p {
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    color: var(--text-primary);
     transition: all 0.3s;
 }
 
