@@ -197,7 +197,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ![Badge Testing](uploads/badge-testing.png)
 
 ---
-
-⭐ **If you find this tool useful, please consider giving it a star!** ⭐
-
 Made with 💜 by [art1ink](https://github.com/art1ink) | © 2025
