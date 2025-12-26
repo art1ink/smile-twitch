@@ -3,7 +3,8 @@ const app = {
     emotes: [],
     currentSize: 28,
     isDarkTheme: false,
-    currentLanguage: 'en'
+    currentLanguage: 'en',
+    selectedBadge: null
 };
 
 // Переводы
@@ -322,10 +323,14 @@ function previewEmote(emoteId) {
     
     const emoteHtml = `<img src="${emote.src}" alt="${emote.name}" class="emote-in-chat" style="height: ${app.currentSize}px; vertical-align: middle; margin: 0 2px;">`;
     
+    // Получение значка, если выбран
+    const badgeHtml = app.selectedBadge ? badges[app.selectedBadge] : '';
+    
     // Добавление в Twitch чат
     const twitchMsg = document.createElement('div');
     twitchMsg.className = 'chat-message';
     twitchMsg.innerHTML = `
+        ${badgeHtml}
         <span class="username" style="color: #FFB347;">${username}:</span>
         <span class="message">${t.checking_emote} ${emoteHtml}</span>
     `;
@@ -364,7 +369,18 @@ function initBadgeControls() {
     badgeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const badgeType = btn.getAttribute('data-badge');
-            addBadgeToChat(badgeType);
+            
+            // Снять выделение со всех кнопок
+            badgeBtns.forEach(b => b.classList.remove('active'));
+            
+            // Если кликнули по уже выбранному значку, отменяем выбор
+            if (app.selectedBadge === badgeType) {
+                app.selectedBadge = null;
+            } else {
+                // Иначе выбираем новый значок
+                app.selectedBadge = badgeType;
+                btn.classList.add('active');
+            }
         });
     });
     
@@ -372,6 +388,10 @@ function initBadgeControls() {
         const t = translations[app.currentLanguage];
         const twitchChat = document.getElementById('twitchChat');
         const discordChat = document.getElementById('discordChat');
+        
+        // Снять выделение со всех значков
+        badgeBtns.forEach(b => b.classList.remove('active'));
+        app.selectedBadge = null;
         
         twitchChat.innerHTML = `
             <div class="chat-message">
@@ -397,31 +417,7 @@ function initBadgeControls() {
     });
 }
 
-// Добавление значка в чат
-function addBadgeToChat(badgeType) {
-    const twitchChat = document.getElementById('twitchChat');
-    const badgeIcon = badges[badgeType];
-    const t = translations[app.currentLanguage];
-    const username = document.getElementById('usernameInput').value.trim() || t.placeholder_username;
-    
-    const badgeNames = {
-        subscriber: 'Subscriber',
-        moderator: 'Moderator',
-        vip: 'VIP',
-        partner: 'Partner'
-    };
-    
-    const msg = document.createElement('div');
-    msg.className = 'chat-message';
-    msg.innerHTML = `
-        ${badgeIcon}
-        <span class="username" style="color: #9147FF;">${username}:</span>
-        <span class="message">${t.message_with_badge}</span>
-    `;
-    
-    twitchChat.appendChild(msg);
-    twitchChat.scrollTop = twitchChat.scrollHeight;
-}
+// Удалена функция addBadgeToChat, так как теперь не используется
 
 // Форматирование размера файла
 function formatFileSize(bytes) {
