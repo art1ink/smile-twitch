@@ -3,7 +3,7 @@ const app = {
     emotes: [],
     currentSize: 28,
     isDarkTheme: false,
-    currentLanguage: 'ru'
+    currentLanguage: 'en'
 };
 
 // Переводы
@@ -98,21 +98,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Инициализация языка
 function initLanguage() {
-    const languageSelect = document.getElementById('languageSelect');
+    const languageBtn = document.getElementById('languageToggle');
+    const languageIcon = languageBtn.querySelector('.language-icon');
+    const languageText = languageBtn.querySelector('.language-text');
     
-    // Загрузка сохраненного языка
-    const savedLang = localStorage.getItem('language') || 'ru';
+    // Загрузка сохраненного языка или установка английского по умолчанию
+    const savedLang = localStorage.getItem('language') || 'en';
     app.currentLanguage = savedLang;
-    languageSelect.value = savedLang;
+    updateLanguageButton(savedLang);
     updateLanguage(savedLang);
     
     // Обработчик смены языка
-    languageSelect.addEventListener('change', (e) => {
-        const lang = e.target.value;
-        app.currentLanguage = lang;
-        localStorage.setItem('language', lang);
-        updateLanguage(lang);
+    languageBtn.addEventListener('click', () => {
+        const newLang = app.currentLanguage === 'en' ? 'ru' : 'en';
+        app.currentLanguage = newLang;
+        localStorage.setItem('language', newLang);
+        updateLanguageButton(newLang);
+        updateLanguage(newLang);
     });
+}
+
+// Обновление кнопки языка
+function updateLanguageButton(lang) {
+    const languageBtn = document.getElementById('languageToggle');
+    const languageIcon = languageBtn.querySelector('.language-icon');
+    const languageText = languageBtn.querySelector('.language-text');
+    
+    if (lang === 'ru') {
+        languageIcon.textContent = '🇷🇺';
+        languageText.textContent = 'RU';
+    } else {
+        languageIcon.textContent = '🇬🇧';
+        languageText.textContent = 'EN';
+    }
 }
 
 // Обновление языка

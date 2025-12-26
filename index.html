@@ -12,13 +12,13 @@
             <div class="header-content">
                 <div class="header-title">
                     <h1>🎮 <span data-i18n="title">Twitch Emote Tester</span></h1>
-                    <p data-i18n="subtitle">Протестируйте свои смайлы на светлом и темном фоне</p>
+                    <p data-i18n="subtitle">Test your emotes on light and dark backgrounds</p>
                 </div>
                 <div class="header-controls">
-                    <select id="languageSelect" class="language-select">
-                        <option value="ru">🇷🇺 RU</option>
-                        <option value="en">🇬🇧 EN</option>
-                    </select>
+                    <button id="languageToggle" class="language-btn">
+                        <span class="language-icon">🇬🇧</span>
+                        <span class="language-text">EN</span>
+                    </button>
                 </div>
             </div>
         </header>
@@ -45,13 +45,6 @@
             <div class="username-input">
                 <label data-i18n="your_nickname">Ваш ник:</label>
                 <input type="text" id="usernameInput" data-i18n-placeholder="placeholder_username" placeholder="TestUser" maxlength="25">
-            </div>
-            
-            <div class="language-selector">
-                <select id="languageSelect" class="language-select">
-                    <option value="ru">🇷🇺 Русский</option>
-                    <option value="en">🇬🇧 English</option>
-                </select>
             </div>
             
             <div class="theme-toggle">
@@ -97,14 +90,22 @@
         <div class="badge-controls">
             <h3 data-i18n="badge_settings">Настройки значков</h3>
             <div class="badge-options">
-                <select id="badgeSelect" class="badge-select">
-                    <option value="" data-i18n="select_badge">Выберите значок</option>
-                    <option value="subscriber" data-i18n="badge_subscriber">Подписчик</option>
-                    <option value="moderator" data-i18n="badge_moderator">Модератор</option>
-                    <option value="vip" data-i18n="badge_vip">VIP</option>
-                    <option value="partner" data-i18n="badge_partner">Партнер</option>
-                </select>
-                <button id="previewBadge" class="btn-preview" data-i18n="preview_button">Предпросмотр</button>
+                <button class="badge-btn" data-badge="subscriber" title="Subscriber">
+                    <span class="badge-icon-display" style="display: inline-block; width: 24px; height: 24px; background: #8b44f7; border-radius: 3px; text-align: center; line-height: 24px; color: white; font-size: 14px; font-weight: bold;">★</span>
+                    <span data-i18n="badge_subscriber">Подписчик</span>
+                </button>
+                <button class="badge-btn" data-badge="moderator" title="Moderator">
+                    <span class="badge-icon-display" style="display: inline-block; width: 24px; height: 24px; background: #00ad03; border-radius: 3px; text-align: center; line-height: 24px; color: white; font-size: 16px; font-weight: bold;">⚔</span>
+                    <span data-i18n="badge_moderator">Модератор</span>
+                </button>
+                <button class="badge-btn" data-badge="vip" title="VIP">
+                    <span class="badge-icon-display" style="display: inline-block; width: 24px; height: 24px; background: #e005b9; border-radius: 3px; text-align: center; line-height: 24px; color: white; font-size: 14px; font-weight: bold;">◆</span>
+                    <span data-i18n="badge_vip">VIP</span>
+                </button>
+                <button class="badge-btn" data-badge="partner" title="Partner">
+                    <span class="badge-icon-display" style="display: inline-block; width: 24px; height: 24px; background: #9147ff; border-radius: 3px; text-align: center; line-height: 24px; color: white; font-size: 16px; font-weight: bold;">✓</span>
+                    <span data-i18n="badge_partner">Партнер</span>
+                </button>
                 <button id="clearBadges" class="btn-clear" data-i18n="clear_button">Очистить</button>
             </div>
         </div>
