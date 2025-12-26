@@ -15,10 +15,10 @@
                     <p data-i18n="subtitle">Test your emotes on light and dark backgrounds</p>
                 </div>
                 <div class="header-controls">
-                    <button id="languageToggle" class="language-btn">
-                        <span class="language-icon">🇬🇧</span>
-                        <span class="language-text">EN</span>
-                    </button>
+                    <select id="languageSelect" class="language-select">
+                        <option value="en">🇬🇧 English</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                    </select>
                 </div>
             </div>
         </header>
@@ -36,21 +36,21 @@
 
         <div class="controls">
             <div class="size-controls">
-                <label data-i18n="emote_size">Размер смайла:</label>
+                <label data-i18n="emote_size">Emote size:</label>
                 <button class="size-btn active" data-size="28">28px</button>
                 <button class="size-btn" data-size="56">56px</button>
                 <button class="size-btn" data-size="112">112px</button>
             </div>
             
             <div class="username-input">
-                <label data-i18n="your_nickname">Ваш ник:</label>
+                <label data-i18n="your_nickname">Your nickname:</label>
                 <input type="text" id="usernameInput" data-i18n-placeholder="placeholder_username" placeholder="TestUser" maxlength="25">
             </div>
             
             <div class="theme-toggle">
                 <button id="themeToggle" class="theme-btn">
                     <span class="theme-icon">🌙</span>
-                    <span class="theme-text" data-i18n="dark_theme">Темная тема</span>
+                    <span class="theme-text" data-i18n="dark_theme">Dark theme</span>
                 </button>
             </div>
         </div>
@@ -88,25 +88,25 @@
         <div class="emotes-grid" id="emotesGrid"></div>
 
         <div class="badge-controls">
-            <h3 data-i18n="badge_settings">Настройки значков</h3>
+            <h3 data-i18n="badge_settings">Badge Settings</h3>
             <div class="badge-options">
-                <button class="badge-btn" data-badge="subscriber" title="Subscriber">
+                <button class="badge-btn" data-badge="subscriber">
                     <span class="badge-icon-display" style="display: inline-block; width: 24px; height: 24px; background: #8b44f7; border-radius: 3px; text-align: center; line-height: 24px; color: white; font-size: 14px; font-weight: bold;">★</span>
-                    <span data-i18n="badge_subscriber">Подписчик</span>
+                    <span data-i18n="badge_subscriber">Subscriber</span>
                 </button>
-                <button class="badge-btn" data-badge="moderator" title="Moderator">
+                <button class="badge-btn" data-badge="moderator">
                     <span class="badge-icon-display" style="display: inline-block; width: 24px; height: 24px; background: #00ad03; border-radius: 3px; text-align: center; line-height: 24px; color: white; font-size: 16px; font-weight: bold;">⚔</span>
-                    <span data-i18n="badge_moderator">Модератор</span>
+                    <span data-i18n="badge_moderator">Moderator</span>
                 </button>
-                <button class="badge-btn" data-badge="vip" title="VIP">
+                <button class="badge-btn" data-badge="vip">
                     <span class="badge-icon-display" style="display: inline-block; width: 24px; height: 24px; background: #e005b9; border-radius: 3px; text-align: center; line-height: 24px; color: white; font-size: 14px; font-weight: bold;">◆</span>
                     <span data-i18n="badge_vip">VIP</span>
                 </button>
-                <button class="badge-btn" data-badge="partner" title="Partner">
+                <button class="badge-btn" data-badge="partner">
                     <span class="badge-icon-display" style="display: inline-block; width: 24px; height: 24px; background: #9147ff; border-radius: 3px; text-align: center; line-height: 24px; color: white; font-size: 16px; font-weight: bold;">✓</span>
-                    <span data-i18n="badge_partner">Партнер</span>
+                    <span data-i18n="badge_partner">Partner</span>
                 </button>
-                <button id="clearBadges" class="btn-clear" data-i18n="clear_button">Очистить</button>
+                <button id="clearBadges" class="btn-clear" data-i18n="clear_button">Clear</button>
             </div>
         </div>
 

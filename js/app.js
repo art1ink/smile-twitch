@@ -98,39 +98,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Инициализация языка
 function initLanguage() {
-    const languageBtn = document.getElementById('languageToggle');
-    const languageIcon = languageBtn.querySelector('.language-icon');
-    const languageText = languageBtn.querySelector('.language-text');
+    const languageSelect = document.getElementById('languageSelect');
     
     // Загрузка сохраненного языка или установка английского по умолчанию
     const savedLang = localStorage.getItem('language') || 'en';
     app.currentLanguage = savedLang;
-    updateLanguageButton(savedLang);
+    languageSelect.value = savedLang;
     updateLanguage(savedLang);
     
     // Обработчик смены языка
-    languageBtn.addEventListener('click', () => {
-        const newLang = app.currentLanguage === 'en' ? 'ru' : 'en';
+    languageSelect.addEventListener('change', (e) => {
+        const newLang = e.target.value;
         app.currentLanguage = newLang;
         localStorage.setItem('language', newLang);
-        updateLanguageButton(newLang);
         updateLanguage(newLang);
     });
-}
-
-// Обновление кнопки языка
-function updateLanguageButton(lang) {
-    const languageBtn = document.getElementById('languageToggle');
-    const languageIcon = languageBtn.querySelector('.language-icon');
-    const languageText = languageBtn.querySelector('.language-text');
-    
-    if (lang === 'ru') {
-        languageIcon.textContent = '🇷🇺';
-        languageText.textContent = 'RU';
-    } else {
-        languageIcon.textContent = '🇬🇧';
-        languageText.textContent = 'EN';
-    }
 }
 
 // Обновление языка
