@@ -5,12 +5,12 @@ const app = {
     isDarkTheme: false
 };
 
-// Значки для предпросмотра
+// Значки для предпросмотра (используем HTML для лучшего отображения)
 const badges = {
-    subscriber: '🔷',
-    moderator: '⚔️',
-    vip: '💎',
-    partner: '✓'
+    subscriber: '<span style="display: inline-block; width: 18px; height: 18px; background: #8b44f7; border-radius: 2px; text-align: center; line-height: 18px; color: white; font-size: 10px; font-weight: bold; margin-right: 4px;">★</span>',
+    moderator: '<span style="display: inline-block; width: 18px; height: 18px; background: #00ad03; border-radius: 2px; text-align: center; line-height: 18px; color: white; font-size: 12px; font-weight: bold; margin-right: 4px;">⚔</span>',
+    vip: '<span style="display: inline-block; width: 18px; height: 18px; background: #e005b9; border-radius: 2px; text-align: center; line-height: 18px; color: white; font-size: 10px; font-weight: bold; margin-right: 4px;">◆</span>',
+    partner: '<span style="display: inline-block; width: 18px; height: 18px; background: #9147ff; border-radius: 2px; text-align: center; line-height: 18px; color: white; font-size: 12px; font-weight: bold; margin-right: 4px;">✓</span>'
 };
 
 // Инициализация
@@ -255,12 +255,19 @@ function addBadgeToChat(badgeType) {
     const twitchChat = document.getElementById('twitchChat');
     const badgeIcon = badges[badgeType];
     
+    const badgeNames = {
+        subscriber: 'Subscriber',
+        moderator: 'Moderator',
+        vip: 'VIP',
+        partner: 'Partner'
+    };
+    
     const msg = document.createElement('div');
     msg.className = 'chat-message';
     msg.innerHTML = `
-        <span class="badge-icon">${badgeIcon}</span>
-        <span class="username" style="color: #9147FF;">${badgeType.charAt(0).toUpperCase() + badgeType.slice(1)}User:</span>
-        <span class="message">Сообщение со значком ${badgeIcon}</span>
+        ${badgeIcon}
+        <span class="username" style="color: #9147FF;">${badgeNames[badgeType]}User:</span>
+        <span class="message">Сообщение со значком</span>
     `;
     
     twitchChat.appendChild(msg);
