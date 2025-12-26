@@ -9,8 +9,18 @@
 <body>
     <div class="container">
         <header>
-            <h1>🎮 <span data-i18n="title">Twitch Emote Tester</span></h1>
-            <p data-i18n="subtitle">Протестируйте свои смайлы на светлом и темном фоне</p>
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>🎮 <span data-i18n="title">Twitch Emote Tester</span></h1>
+                    <p data-i18n="subtitle">Протестируйте свои смайлы на светлом и темном фоне</p>
+                </div>
+                <div class="header-controls">
+                    <select id="languageSelect" class="language-select">
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="en">🇬🇧 EN</option>
+                    </select>
+                </div>
+            </div>
         </header>
 
         <div class="upload-section">
@@ -54,29 +64,29 @@
 
         <div class="preview-container">
             <div class="preview-section">
-                <h2>Twitch Chat</h2>
+                <h2 data-i18n="twitch_chat">Twitch Chat</h2>
                 <div class="chat-preview" id="twitchChat">
                     <div class="chat-message">
                         <span class="username" style="color: #FF6B6B;">Streamer:</span>
-                        <span class="message">Привет чат! Как дела?</span>
+                        <span class="message" data-i18n="chat_message_1">Привет чат! Как дела?</span>
                     </div>
                     <div class="chat-message">
                         <span class="username" style="color: #4ECDC4;">Viewer123:</span>
-                        <span class="message">Отлично! <span class="emote-placeholder">Смайл</span></span>
+                        <span class="message" data-i18n="chat_message_2">Отлично! <span class="emote-placeholder">Смайл</span></span>
                     </div>
                 </div>
             </div>
 
             <div class="preview-section">
-                <h2>Discord Chat</h2>
+                <h2 data-i18n="discord_chat">Discord Chat</h2>
                 <div class="chat-preview discord" id="discordChat">
                     <div class="chat-message">
                         <span class="username" style="color: #7289DA;">Moderator</span>
-                        <span class="message">Добро пожаловать!</span>
+                        <span class="message" data-i18n="chat_message_3">Добро пожаловать!</span>
                     </div>
                     <div class="chat-message">
                         <span class="username" style="color: #43B581;">User456</span>
-                        <span class="message">Спасибо! <span class="emote-placeholder">Смайл</span></span>
+                        <span class="message" data-i18n="chat_message_4">Спасибо! <span class="emote-placeholder">Смайл</span></span>
                     </div>
                 </div>
             </div>
@@ -85,17 +95,17 @@
         <div class="emotes-grid" id="emotesGrid"></div>
 
         <div class="badge-controls">
-            <h3>Настройки значков</h3>
+            <h3 data-i18n="badge_settings">Настройки значков</h3>
             <div class="badge-options">
                 <select id="badgeSelect" class="badge-select">
-                    <option value="">Выберите значок</option>
-                    <option value="subscriber">Подписчик</option>
-                    <option value="moderator">Модератор</option>
-                    <option value="vip">VIP</option>
-                    <option value="partner">Партнер</option>
+                    <option value="" data-i18n="select_badge">Выберите значок</option>
+                    <option value="subscriber" data-i18n="badge_subscriber">Подписчик</option>
+                    <option value="moderator" data-i18n="badge_moderator">Модератор</option>
+                    <option value="vip" data-i18n="badge_vip">VIP</option>
+                    <option value="partner" data-i18n="badge_partner">Партнер</option>
                 </select>
-                <button id="previewBadge" class="btn-preview">Предпросмотр</button>
-                <button id="clearBadges" class="btn-clear">Очистить</button>
+                <button id="previewBadge" class="btn-preview" data-i18n="preview_button">Предпросмотр</button>
+                <button id="clearBadges" class="btn-clear" data-i18n="clear_button">Очистить</button>
             </div>
         </div>
 

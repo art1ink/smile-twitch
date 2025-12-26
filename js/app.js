@@ -148,16 +148,6 @@ function updateLanguage(lang) {
         }
     });
     
-    // Обновление опций select
-    const badgeSelect = document.getElementById('badgeSelect');
-    if (badgeSelect) {
-        badgeSelect.options[0].text = t.select_badge;
-        badgeSelect.options[1].text = t.badge_subscriber;
-        badgeSelect.options[2].text = t.badge_moderator;
-        badgeSelect.options[3].text = t.badge_vip;
-        badgeSelect.options[4].text = t.badge_partner;
-    }
-    
     // Обновление текста кнопки темы
     updateThemeButtonText();
     
@@ -368,20 +358,14 @@ function deleteEmote(emoteId) {
 
 // Управление значками
 function initBadgeControls() {
-    const badgeSelect = document.getElementById('badgeSelect');
-    const previewBtn = document.getElementById('previewBadge');
+    const badgeBtns = document.querySelectorAll('.badge-btn[data-badge]');
     const clearBtn = document.getElementById('clearBadges');
     
-    previewBtn.addEventListener('click', () => {
-        const badge = badgeSelect.value;
-        const t = translations[app.currentLanguage];
-        
-        if (!badge) {
-            alert(t.select_badge_alert);
-            return;
-        }
-        
-        addBadgeToChat(badge);
+    badgeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const badgeType = btn.getAttribute('data-badge');
+            addBadgeToChat(badgeType);
+        });
     });
     
     clearBtn.addEventListener('click', () => {
