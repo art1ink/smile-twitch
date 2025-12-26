@@ -324,14 +324,13 @@ function previewEmote(emoteId) {
     const emoteHtml = `<img src="${emote.src}" alt="${emote.name}" class="emote-in-chat" style="height: ${app.currentSize}px; vertical-align: middle; margin: 0 2px;">`;
     
     // Получение значка, если выбран
-    const badgeHtml = app.selectedBadge ? badges[app.selectedBadge] : '';
+    const badgeHtml = app.selectedBadge ? badges[app.selectedBadge] + ' ' : '';
     
     // Добавление в Twitch чат
     const twitchMsg = document.createElement('div');
     twitchMsg.className = 'chat-message';
     twitchMsg.innerHTML = `
-        ${badgeHtml}
-        <span class="username" style="color: #FFB347;">${username}:</span>
+        ${badgeHtml}<span class="username" style="color: #FFB347;">${username}:</span>
         <span class="message">${t.checking_emote} ${emoteHtml}</span>
     `;
     twitchChat.appendChild(twitchMsg);
