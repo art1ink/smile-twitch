@@ -188,13 +188,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📸 Screenshots
 
 ### Light Theme
-![Light Theme Preview](screenshots/light-theme.png)
+![Light Theme Preview](uploads/light_theme.png)
 
 ### Dark Theme
-![Dark Theme Preview](screenshots/dark-theme.png)
+![Dark Theme Preview](uploads/dark_theme.png)
 
 ### Badge Testing
-![Badge Testing](screenshots/badge-testing.png)
+![Badge Testing](uploads/badge-testing.png)
 
 ---
 
