@@ -169,6 +169,8 @@ function previewEmote(emoteId) {
     const emote = app.emotes.find(e => e.id == emoteId);
     if (!emote) return;
     
+    const username = document.getElementById('usernameInput').value.trim() || 'TestUser';
+    
     const twitchChat = document.getElementById('twitchChat');
     const discordChat = document.getElementById('discordChat');
     
@@ -178,8 +180,8 @@ function previewEmote(emoteId) {
     const twitchMsg = document.createElement('div');
     twitchMsg.className = 'chat-message';
     twitchMsg.innerHTML = `
-        <span class="username" style="color: #FFB347;">TestUser:</span>
-        <span class="message">Проверяем смайл ${emoteHtml} ${emote.name}</span>
+        <span class="username" style="color: #FFB347;">${username}:</span>
+        <span class="message">Проверяем смайл ${emoteHtml}</span>
     `;
     twitchChat.appendChild(twitchMsg);
     
@@ -187,8 +189,8 @@ function previewEmote(emoteId) {
     const discordMsg = document.createElement('div');
     discordMsg.className = 'chat-message';
     discordMsg.innerHTML = `
-        <span class="username" style="color: #F47FFF;">Tester</span>
-        <span class="message">Тест смайла ${emoteHtml} ${emote.name}</span>
+        <span class="username" style="color: #F47FFF;">${username}</span>
+        <span class="message">Тест смайла ${emoteHtml}</span>
     `;
     discordChat.appendChild(discordMsg);
     
@@ -254,6 +256,7 @@ function initBadgeControls() {
 function addBadgeToChat(badgeType) {
     const twitchChat = document.getElementById('twitchChat');
     const badgeIcon = badges[badgeType];
+    const username = document.getElementById('usernameInput').value.trim() || 'TestUser';
     
     const badgeNames = {
         subscriber: 'Subscriber',
@@ -266,7 +269,7 @@ function addBadgeToChat(badgeType) {
     msg.className = 'chat-message';
     msg.innerHTML = `
         ${badgeIcon}
-        <span class="username" style="color: #9147FF;">${badgeNames[badgeType]}User:</span>
+        <span class="username" style="color: #9147FF;">${username}:</span>
         <span class="message">Сообщение со значком</span>
     `;
     
