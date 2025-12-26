@@ -125,7 +125,7 @@ header p {
 
 .size-controls label {
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--text-primary);
 }
 
 .size-btn {
