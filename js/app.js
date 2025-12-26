@@ -2,7 +2,80 @@
 const app = {
     emotes: [],
     currentSize: 28,
-    isDarkTheme: false
+    isDarkTheme: false,
+    currentLanguage: 'ru'
+};
+
+// Переводы
+const translations = {
+    ru: {
+        title: 'Twitch Emote Tester',
+        subtitle: 'Протестируйте свои смайлы на светлом и темном фоне',
+        upload_files: 'Выбрать файлы',
+        upload_hint: 'PNG, GIF или JPEG',
+        emote_size: 'Размер смайла:',
+        your_nickname: 'Ваш ник:',
+        placeholder_username: 'TestUser',
+        dark_theme: 'Темная тема',
+        light_theme: 'Светлая тема',
+        twitch_chat: 'Twitch Chat',
+        discord_chat: 'Discord Chat',
+        chat_message_1: 'Привет чат! Как дела?',
+        chat_message_2: 'Отлично!',
+        chat_message_3: 'Добро пожаловать!',
+        chat_message_4: 'Спасибо!',
+        badge_settings: 'Настройки значков',
+        select_badge: 'Выберите значок',
+        badge_subscriber: 'Подписчик',
+        badge_moderator: 'Модератор',
+        badge_vip: 'VIP',
+        badge_partner: 'Партнер',
+        preview_button: 'Предпросмотр',
+        clear_button: 'Очистить',
+        insert_to_chat: 'Вставить в чат',
+        delete: 'Удалить',
+        no_emotes: 'Загрузите смайлы для тестирования',
+        upload_image: 'Пожалуйста, загрузите изображение',
+        confirm_delete: 'Удалить этот смайл?',
+        select_badge_alert: 'Выберите значок',
+        checking_emote: 'Проверяем смайл',
+        testing_emote: 'Тест смайла',
+        message_with_badge: 'Сообщение со значком'
+    },
+    en: {
+        title: 'Twitch Emote Tester',
+        subtitle: 'Test your emotes on light and dark backgrounds',
+        upload_files: 'Select files',
+        upload_hint: 'PNG, GIF or JPEG',
+        emote_size: 'Emote size:',
+        your_nickname: 'Your nickname:',
+        placeholder_username: 'TestUser',
+        dark_theme: 'Dark theme',
+        light_theme: 'Light theme',
+        twitch_chat: 'Twitch Chat',
+        discord_chat: 'Discord Chat',
+        chat_message_1: 'Hey chat! How are you?',
+        chat_message_2: 'Great!',
+        chat_message_3: 'Welcome!',
+        chat_message_4: 'Thanks!',
+        badge_settings: 'Badge Settings',
+        select_badge: 'Select badge',
+        badge_subscriber: 'Subscriber',
+        badge_moderator: 'Moderator',
+        badge_vip: 'VIP',
+        badge_partner: 'Partner',
+        preview_button: 'Preview',
+        clear_button: 'Clear',
+        insert_to_chat: 'Insert to chat',
+        delete: 'Delete',
+        no_emotes: 'Upload emotes for testing',
+        upload_image: 'Please upload an image',
+        confirm_delete: 'Delete this emote?',
+        select_badge_alert: 'Select a badge',
+        checking_emote: 'Checking emote',
+        testing_emote: 'Testing emote',
+        message_with_badge: 'Message with badge'
+    }
 };
 
 // Значки для предпросмотра (используем HTML для лучшего отображения)
@@ -19,8 +92,78 @@ document.addEventListener('DOMContentLoaded', () => {
     initSizeControls();
     initThemeToggle();
     initBadgeControls();
+    initLanguage();
     loadSavedEmotes();
 });
+
+// Инициализация языка
+function initLanguage() {
+    const languageSelect = document.getElementById('languageSelect');
+    
+    // Загрузка сохраненного языка
+    const savedLang = localStorage.getItem('language') || 'ru';
+    app.currentLanguage = savedLang;
+    languageSelect.value = savedLang;
+    updateLanguage(savedLang);
+    
+    // Обработчик смены языка
+    languageSelect.addEventListener('change', (e) => {
+        const lang = e.target.value;
+        app.currentLanguage = lang;
+        localStorage.setItem('language', lang);
+        updateLanguage(lang);
+    });
+}
+
+// Обновление языка
+function updateLanguage(lang) {
+    const t = translations[lang];
+    
+    // Обновление всех элементов с data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = t[key];
+            } else {
+                // Сохраняем HTML внутри элемента (для смайлов)
+                if (el.querySelector('.emote-placeholder')) {
+                    el.childNodes.forEach(node => {
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            node.textContent = t[key];
+                        }
+                    });
+                } else {
+                    el.textContent = t[key];
+                }
+            }
+        }
+    });
+    
+    // Обновление placeholder отдельно
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) {
+            el.placeholder = t[key];
+        }
+    });
+    
+    // Обновление опций select
+    const badgeSelect = document.getElementById('badgeSelect');
+    if (badgeSelect) {
+        badgeSelect.options[0].text = t.select_badge;
+        badgeSelect.options[1].text = t.badge_subscriber;
+        badgeSelect.options[2].text = t.badge_moderator;
+        badgeSelect.options[3].text = t.badge_vip;
+        badgeSelect.options[4].text = t.badge_partner;
+    }
+    
+    // Обновление текста кнопки темы
+    updateThemeButtonText();
+    
+    // Перерисовка сетки смайлов
+    renderEmotes();
+}
 
 // Загрузка файлов
 function initUpload() {
@@ -54,8 +197,10 @@ function initUpload() {
 
 // Обработка загрузки файла
 function handleFileUpload(file) {
+    const t = translations[app.currentLanguage];
+    
     if (!file.type.match('image.*')) {
-        alert('Пожалуйста, загрузите изображение');
+        alert(t.upload_image);
         return;
     }
 
@@ -110,19 +255,12 @@ function updateEmoteSize() {
 function initThemeToggle() {
     const themeBtn = document.getElementById('themeToggle');
     const themeIcon = themeBtn.querySelector('.theme-icon');
-    const themeText = themeBtn.querySelector('.theme-text');
     
     themeBtn.addEventListener('click', () => {
         app.isDarkTheme = !app.isDarkTheme;
         document.body.classList.toggle('dark-theme');
         
-        if (app.isDarkTheme) {
-            themeIcon.textContent = '☀️';
-            themeText.textContent = 'Светлая тема';
-        } else {
-            themeIcon.textContent = '🌙';
-            themeText.textContent = 'Темная тема';
-        }
+        updateThemeButtonText();
         
         localStorage.setItem('theme', app.isDarkTheme ? 'dark' : 'light');
     });
@@ -134,12 +272,29 @@ function initThemeToggle() {
     }
 }
 
+// Обновление текста кнопки темы
+function updateThemeButtonText() {
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIcon = themeBtn.querySelector('.theme-icon');
+    const themeText = themeBtn.querySelector('.theme-text');
+    const t = translations[app.currentLanguage];
+    
+    if (app.isDarkTheme) {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = t.light_theme;
+    } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = t.dark_theme;
+    }
+}
+
 // Отрисовка смайлов
 function renderEmotes() {
     const grid = document.getElementById('emotesGrid');
+    const t = translations[app.currentLanguage];
     
     if (app.emotes.length === 0) {
-        grid.innerHTML = '<p style="text-align: center; color: var(--text-secondary); grid-column: 1 / -1;">Загрузите смайлы для тестирования</p>';
+        grid.innerHTML = `<p style="text-align: center; color: var(--text-secondary); grid-column: 1 / -1;">${t.no_emotes}</p>`;
         return;
     }
     
@@ -154,10 +309,10 @@ function renderEmotes() {
             </div>
             <div class="emote-actions">
                 <button class="btn-preview" onclick="previewEmote('${emote.id}')">
-                    Вставить в чат
+                    ${t.insert_to_chat}
                 </button>
                 <button class="btn-delete" onclick="deleteEmote('${emote.id}')">
-                    Удалить
+                    ${t.delete}
                 </button>
             </div>
         </div>
@@ -169,7 +324,8 @@ function previewEmote(emoteId) {
     const emote = app.emotes.find(e => e.id == emoteId);
     if (!emote) return;
     
-    const username = document.getElementById('usernameInput').value.trim() || 'TestUser';
+    const t = translations[app.currentLanguage];
+    const username = document.getElementById('usernameInput').value.trim() || t.placeholder_username;
     
     const twitchChat = document.getElementById('twitchChat');
     const discordChat = document.getElementById('discordChat');
@@ -181,7 +337,7 @@ function previewEmote(emoteId) {
     twitchMsg.className = 'chat-message';
     twitchMsg.innerHTML = `
         <span class="username" style="color: #FFB347;">${username}:</span>
-        <span class="message">Проверяем смайл ${emoteHtml}</span>
+        <span class="message">${t.checking_emote} ${emoteHtml}</span>
     `;
     twitchChat.appendChild(twitchMsg);
     
@@ -190,7 +346,7 @@ function previewEmote(emoteId) {
     discordMsg.className = 'chat-message';
     discordMsg.innerHTML = `
         <span class="username" style="color: #F47FFF;">${username}</span>
-        <span class="message">Тест смайла ${emoteHtml}</span>
+        <span class="message">${t.testing_emote} ${emoteHtml}</span>
     `;
     discordChat.appendChild(discordMsg);
     
@@ -201,7 +357,9 @@ function previewEmote(emoteId) {
 
 // Удаление смайла
 function deleteEmote(emoteId) {
-    if (confirm('Удалить этот смайл?')) {
+    const t = translations[app.currentLanguage];
+    
+    if (confirm(t.confirm_delete)) {
         app.emotes = app.emotes.filter(e => e.id != emoteId);
         saveEmotes();
         renderEmotes();
@@ -216,8 +374,10 @@ function initBadgeControls() {
     
     previewBtn.addEventListener('click', () => {
         const badge = badgeSelect.value;
+        const t = translations[app.currentLanguage];
+        
         if (!badge) {
-            alert('Выберите значок');
+            alert(t.select_badge_alert);
             return;
         }
         
@@ -225,28 +385,29 @@ function initBadgeControls() {
     });
     
     clearBtn.addEventListener('click', () => {
+        const t = translations[app.currentLanguage];
         const twitchChat = document.getElementById('twitchChat');
         const discordChat = document.getElementById('discordChat');
         
         twitchChat.innerHTML = `
             <div class="chat-message">
                 <span class="username" style="color: #FF6B6B;">Streamer:</span>
-                <span class="message">Привет чат! Как дела?</span>
+                <span class="message">${t.chat_message_1}</span>
             </div>
             <div class="chat-message">
                 <span class="username" style="color: #4ECDC4;">Viewer123:</span>
-                <span class="message">Отлично! <span class="emote-placeholder">Смайл</span></span>
+                <span class="message">${t.chat_message_2}</span>
             </div>
         `;
         
         discordChat.innerHTML = `
             <div class="chat-message">
                 <span class="username" style="color: #7289DA;">Moderator</span>
-                <span class="message">Добро пожаловать!</span>
+                <span class="message">${t.chat_message_3}</span>
             </div>
             <div class="chat-message">
                 <span class="username" style="color: #43B581;">User456</span>
-                <span class="message">Спасибо! <span class="emote-placeholder">Смайл</span></span>
+                <span class="message">${t.chat_message_4}</span>
             </div>
         `;
     });
@@ -256,7 +417,8 @@ function initBadgeControls() {
 function addBadgeToChat(badgeType) {
     const twitchChat = document.getElementById('twitchChat');
     const badgeIcon = badges[badgeType];
-    const username = document.getElementById('usernameInput').value.trim() || 'TestUser';
+    const t = translations[app.currentLanguage];
+    const username = document.getElementById('usernameInput').value.trim() || t.placeholder_username;
     
     const badgeNames = {
         subscriber: 'Subscriber',
@@ -270,7 +432,7 @@ function addBadgeToChat(badgeType) {
     msg.innerHTML = `
         ${badgeIcon}
         <span class="username" style="color: #9147FF;">${username}:</span>
-        <span class="message">Сообщение со значком</span>
+        <span class="message">${t.message_with_badge}</span>
     `;
     
     twitchChat.appendChild(msg);
